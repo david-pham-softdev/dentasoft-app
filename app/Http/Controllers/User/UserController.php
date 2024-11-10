@@ -13,6 +13,21 @@ use App\Models\Role;
 
 class UserController extends Controller
 {
+    /**
+     * config
+     *
+     * @var config
+     */
+    protected $config;
+
+    /**
+     * TokenClient constructor.
+     */
+    public function __construct()
+    {
+        $this->config = config('services.dentasoft');
+    }
+
     public function index()
     {
         $this->authorize('show-user', User::class);
@@ -70,40 +85,47 @@ class UserController extends Controller
     {
     	$this->authorize('edit-user', User::class);
 
-    	$user = User::find($id);
-
+    	$users = $this->getUserList();
+        unset($users['itemCount']);
+        if (!$users) {
+            $this->flashMessage('warning', 'User not found!', 'danger');
+            return redirect()->route('user');
+        }
+        $user = $this->findById($users, (int) $id);
     	if(!$user){
         	$this->flashMessage('warning', 'User not found!', 'danger');
             return redirect()->route('user');
         }
 
-        $roles = Role::all();
-
-		$roles_ids = Role::rolesUser($user);
-
-        return view('users.edit',compact('user', 'roles', 'roles_ids'));
+        return view('users.edit',compact('user'));
     }
 
-    public function update(UpdateUserRequest $request,$id)
+    public function update(Request $request)
     {
     	$this->authorize('edit-user', User::class);
 
-    	$user = User::find($id);
+    	$users = $this->getUserList();
+        unset($users['itemCount']);
+        if (!$users) {
+            $this->flashMessage('warning', 'User not found!', 'danger');
+            return redirect()->route('user.edit', $request['Id']);
+        }
+        $user = $this->findById($users, (int) $request['Id']);
 
-        if(!$user){
+    	if(!$user){
         	$this->flashMessage('warning', 'User not found!', 'danger');
-            return redirect()->route('user');
+            return redirect()->route('user.edit', $request['Id']);
         }
 
-        $user->update($request->all());
-
-        $roles = $request->input('roles') ? $request->input('roles') : [];
-
-        $user->roles()->sync($roles);
+        $res = $this->updateUserClient($request);
+        if($res['response']['code'] !== 200) {
+            $this->flashMessage('warning', $res['response']['message'], 'danger');
+            return redirect()->route('user.edit', $request['Id']);
+        }
 
         $this->flashMessage('check', 'User updated successfully!', 'success');
 
-        return redirect()->route('user');
+        return redirect()->route('user.edit', $request['Id']);
     }
 
     public function updatePassword(UpdatePasswordUserRequest $request,$id)
@@ -123,6 +145,56 @@ class UserController extends Controller
 
         $this->flashMessage('check', 'User password updated successfully!', 'success');
 
+        return redirect()->route('user');
+    }
+
+    public function updateStatus($id)
+    {
+        $users = $this->getUserList();
+        unset($users['itemCount']);
+        if (!$users) {
+            $this->flashMessage('warning', 'User not found!', 'danger');
+            return redirect()->route('user', $id);
+        }
+        $user = $this->findById($users, (int) $id);
+
+    	if(!$user){
+        	$this->flashMessage('warning', 'User not found!', 'danger');
+            return redirect()->route('user', $id);
+        }
+
+        $res = $this->updateStatusUserClient($user);
+        if($res['response']['code'] !== 200) {
+            $this->flashMessage('warning', $res['response']['message'], 'danger');
+            return redirect()->route('user');
+        }
+
+        $this->flashMessage('check', 'User updated status successfully!', 'success');
+        return redirect()->route('user');
+    }
+
+    public function updateRole($id)
+    {
+        $users = $this->getUserList();
+        unset($users['itemCount']);
+        if (!$users) {
+            $this->flashMessage('warning', 'User not found!', 'danger');
+            return redirect()->route('user', $id);
+        }
+        $user = $this->findById($users, (int) $id);
+
+    	if(!$user){
+        	$this->flashMessage('warning', 'User not found!', 'danger');
+            return redirect()->route('user', $id);
+        }
+
+        $res = $this->updateRoleUserClient($user);
+        if(empty($res) || $res['response']['code'] !== 200) {
+            $this->flashMessage('warning', $res['response']['message'], 'danger');
+            return redirect()->route('user');
+        }
+
+        $this->flashMessage('check', 'User updated status successfully!', 'success');
         return redirect()->route('user');
     }
 
@@ -189,10 +261,10 @@ class UserController extends Controller
     public function getUserList()
     {
         $client = new Client();
-        $response = $client->get('https://slateblue-dove-892370.hostingersite.com//api/Users/getUserList.php', [
+        $response = $client->get($this->config['host'].'/api/Users/getUserList.php', [
             'query' => [
-                'email' => 'david.pham.softdev@yopmail.com',
-                'api_key' => 'YjIzMzUzYzZmNWQyZGNhZg=='
+                'email' => $this->config['email'],
+                'api_key' => $this->config['api_key']
             ]
         ]);
 
@@ -256,7 +328,7 @@ class UserController extends Controller
             ]
         ];
 
-        $response = $client->post('https://slateblue-dove-892370.hostingersite.com//api/Users/Create.php', $options);
+        $response = $client->post($this->config['host'].'/api/Users/Create.php', $options);
 
         return json_decode($response->getBody(), true);
     }
@@ -266,8 +338,8 @@ class UserController extends Controller
         $client = new Client();
         $options = [
             'query' => [
-                'email' => 'david.pham.softdev@yopmail.com',
-                'api_key' => 'YjIzMzUzYzZmNWQyZGNhZg=='
+                'email' => $this->config['email'],
+                'api_key' => $this->config['api_key']
             ],
             'multipart' => [
                 [
@@ -281,7 +353,145 @@ class UserController extends Controller
             ]
         ];
 
-        $response = $client->post('https://slateblue-dove-892370.hostingersite.com//api/Users/deleteUser.php', $options);
+        $response = $client->post($this->config['host'].'/api/Users/deleteUser.php', $options);
+
+        return json_decode($response->getBody(), true);
+    }
+
+    public function editSite($id)
+    {
+    	$this->authorize('edit-user', User::class);
+
+    	$users = $this->getUserList();
+        unset($users['itemCount']);
+        if (!$users) {
+            $this->flashMessage('warning', 'User not found!', 'danger');
+            return redirect()->route('user.show', $id);
+        }
+        $user = $this->findById($users, (int) $id);
+    	if(!$user){
+        	$this->flashMessage('warning', 'User not found!', 'danger');
+            return redirect()->route('user.site.edit', $id);
+        }
+
+        return view('users.edit-site', compact('user'));
+    }
+
+    public function updateSite(Request $request, $user_id)
+    {
+    	$this->authorize('edit-user', User::class);
+
+    	$users = $this->getUserList();
+        unset($users['itemCount']);
+        if (!$users) {
+            $this->flashMessage('warning', 'User not found!', 'danger');
+            return redirect()->route('user.show', $user_id);
+        }
+        $user = $this->findById($users, (int) $user_id);
+
+    	if(!$user){
+        	$this->flashMessage('warning', 'User not found!', 'danger');
+            return redirect()->route('user.show', $user_id);
+        }
+
+        $res = $this->updateUserClient($request);
+        if($res['response']['code'] !== 200) {
+            $this->flashMessage('warning', $res['response']['message'], 'danger');
+            return redirect()->route('user.show', $user_id);
+        }
+
+        $this->flashMessage('check', 'Site User updated successfully!', 'success');
+
+        return redirect()->route('user.show', $user_id);
+    }
+
+    public function updateStatusUserClient($user)
+    {
+        $client = new Client();
+        $options = [
+            'query' => [
+                'email' => $this->config['email'],
+                'api_key' => $this->config['api_key']
+            ],
+            'multipart' => [
+                [
+                    'name' => 'email',
+                    'contents' => $user['Email']
+                ],
+                [
+                    'name' => 'company_code',
+                    'contents' => $user['company_code']
+                ],
+                [
+                    'name' => 'status',
+                    'contents' => $user['Status'] === 'Inactive' ? 'Active' : 'Inactive'
+                ]
+            ]
+        ];
+
+        $response = $client->post($this->config['host'].'/api/Users/update_user_status.php', $options);
+
+        return json_decode($response->getBody(), true);
+    }
+
+    public function updateRoleUserClient($user)
+    {
+        $client = new Client();
+        $options = [
+            'query' => [
+                'email' => $this->config['email'],
+                'api_key' => $this->config['api_key']
+            ],
+            'multipart' => [
+                [
+                    'name' => 'email',
+                    'contents' => $user['Email']
+                ],
+                [
+                    'name' => 'company_code',
+                    'contents' => $user['company_code']
+                ],
+                [
+                    'name' => 'role',
+                    'contents' => $user['Role'] === 'User' ? 'Admin' : 'User'
+                ]
+            ]
+        ];
+
+        $response = $client->post($this->config['host'].'/api/Users/updateRole.php', $options);
+
+        return json_decode($response->getBody(), true);
+    }
+
+    public function updateUserClient($request)
+    {
+        $client = new Client();
+        $options = [
+            'query' => [
+                'email' => $this->config['email'],
+                'api_key' => $this->config['api_key']
+            ],
+            'multipart' => [
+                [
+                    'name' => 'site_id',
+                    'contents' => $request['site_id']
+                ],
+                [
+                    'name' => 'site_name',
+                    'contents' => $request['site_name']
+                ],
+                [
+                    'name' => 'site_url',
+                    'contents' => $request['site_url']
+                ],
+                [
+                    'name' => 'site_phone',
+                    'contents' => $request['site_phone']
+                ]
+            ]
+        ];
+
+        $response = $client->post($this->config['host'].'/api/Users/updateSite.php', $options);
 
         return json_decode($response->getBody(), true);
     }
@@ -305,7 +515,7 @@ class UserController extends Controller
             ]
         ];
 
-        $response = $client->post('https://slateblue-dove-892370.hostingersite.com//api/Users/EmailVerification.php', $options);
+        $response = $client->post($this->config['host'].'/api/Users/EmailVerification.php', $options);
 
         return json_decode($response->getBody(), true);
     }
@@ -319,7 +529,7 @@ class UserController extends Controller
             ]
         ];
 
-        $response = $client->post('https://slateblue-dove-892370.hostingersite.com//api/Users/resentCode.php', $options);
+        $response = $client->post($this->config['host'].'/api/Users/resentCode.php', $options);
 
         return json_decode($response->getBody(), true);
     }

@@ -42,7 +42,7 @@
 							</thead>
 							<tbody>
 								@foreach($users as $user)
-									@if ($user['Id'] != 1)
+									@if (!empty($user) && $user['Email'] != 'david.pham.softdev@yopmail.com')
 										<tr>
 											<td>
 												@if($user['Status'] === 'Active')
@@ -62,13 +62,17 @@
 												@endif
 											</td>
                                             <td>{{ $user['Phone'] }}</td>
-                                            <td>{{ $user['Role'] }}</td>
-											<td class="text-center">
+                                            <td class="text-right">
+												<span class="label label-warning">{{ $user['Role'] }}</span>
+												<a class="btn btn-primary  btn-xs" href="#" title="Delete {{ $user['FirstName']. ' '. $user['LastName']}}" data-toggle="modal" data-target="#modal-change-role-{{ $user['Id'] }}"><i class="fa fa-pencil"></i></a>
+											</td>
+											<td class="text-right">
 												@if($user['Status'] === 'Active')
 													<span class="label label-success">Active</span>
 												@else
 													<span class="label label-danger">Inactive</span>
 												@endif
+												<a class="btn btn-primary  btn-xs" href="#" title="Delete {{ $user['FirstName']. ' '. $user['LastName']}}" data-toggle="modal" data-target="#modal-change-status-{{ $user['Id'] }}"><i class="fa fa-pencil"></i></a>
 											</td>
 {{--											<td class="text-center">{{ $user->created_at->format('d/m/Y H:i') }}</td>--}}
 											<td class="text-right">
@@ -98,6 +102,46 @@
 													<div class="modal-footer">
 														<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
 														<a href="{{ route('user.destroy', [$user['Email'], $user['company_code']]) }}"><button type="button" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</button></a>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div class="modal fade" id="modal-change-status-{{ $user['Id'] }}">
+											<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-header">
+														<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+															<span aria-hidden="true">×</span>
+														</button>
+														<h4 class="modal-title"><i class="fa fa-warning"></i> Caution!!</h4>
+													</div>
+													<div class="modal-body">
+														<p>Do you really want to Change Status ({{ $user['FirstName']. ' '. $user['LastName'] }}) ?</p>
+													</div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
+														<a href="{{ route('user.update.status', $user['Id']) }}"><button type="button" class="btn btn-primary">Change</button></a>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div class="modal fade" id="modal-change-role-{{ $user['Id'] }}">
+											<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-header">
+														<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+															<span aria-hidden="true">×</span>
+														</button>
+														<h4 class="modal-title"><i class="fa fa-warning"></i> Caution!!</h4>
+													</div>
+													<div class="modal-body">
+														<p>Do you really want to Change Role ({{ $user['FirstName']. ' '. $user['LastName'] }}) ?</p>
+													</div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
+														<a href="{{ route('user.update.role', $user['Id']) }}"><button type="button" class="btn btn-primary">Change</button></a>
 													</div>
 												</div>
 											</div>

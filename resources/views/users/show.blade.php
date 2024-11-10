@@ -15,7 +15,7 @@
 @endsection
 
 @section('content')
-    @if ($user['Id'] != 1)    
+    @if (!empty($user))    
         <div class="box box-primary">
     		<div class="box-body">
     			<div class="row">
@@ -37,19 +37,32 @@
                             @endif                        
                         </div>
                         <div class="col-lg-9">
-                            <div class="attachment">
-                                <h4><b>E-mail: </b></h4>
-                                <span>{{ $user['Email'] }}</span>
-                                <h4><b>Phone: </b></h4>
-                                <span>{{ $user['Phone'] }}</span>
-                                <h4><b>Role</b></h4>
-                                <span class="label label-primary">{{ $user['Role'] }}</span>
-                                <h4><b>Site Name: </b></h4>
-                                <span>{{ $user['site_name'] }}</span>
-                                <h4><b>Company Code: </b></h4>
-                                <span>{{ $user['company_code'] }}</span>
-                                <br>
-                                <div class="pull-right"> 
+                            <div class="attachment row">
+                                <div class="col-lg-6">
+                                    <h4><b>E-mail: </b></h4>
+                                    <span>{{ $user['Email'] ?? 'N/A' }}</span>
+                                    <h4><b>Phone: </b></h4>
+                                    <span>{{ $user['Phone'] ?? 'N/A' }}</span>
+                                    <h4><b>Role</b></h4>
+                                    <span class="label label-primary">{{ $user['Role'] ?? 'N/A' }}</span>
+                                </div>
+                                <div class="col-lg-6">
+                                    <h4><b>Company Code: </b></h4>
+                                    <span>{{ $user['company_code'] ?? 'N/A' }}</span>
+                                    <h4><b>Site Name: </b></h4>
+                                    <span>{{ !empty($user['site_name']) ? $user['site_name'] : 'N/A' }}</span>
+                                    <h4><b>Site Url: </b></h4>
+                                    <span>{{ !empty($user['site_phone']) ? $user['site_phone'] : 'N/A' }}</span>
+                                    <h4><b>Site Phone: </b></h4>
+                                    <span>{{ !empty($user['site_phone']) ? $user['site_phone']  : 'N/A' }}</span>
+                                    <br>
+                                    <br>
+                                    <a href="{{ route('user.site.edit', $user['Id']) }}" title="Edit {{ $user['FirstName']. ' '. $user['LastName'] }}"><button type="button" class="btn btn-warning btn-sm btn-flat"><i class="fa fa-pencil"></i> Edit Site</button></a>
+                                </div>
+                                
+                                <div class="col-lg-12 pull-right"> 
+                                    <br>
+                                    <br>
                                     @if($user['Email_Verify'] !== "true")                           
                                     <a href="/user/code-verify?email={{$user['Email']}}" title="Code Verify {{ $user['FirstName']. ' '. $user['LastName'] }}"><button type="button" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-key"></i> Code Verify</button></a>
                                     @endif

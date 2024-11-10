@@ -22,7 +22,6 @@
 				<div class="col-md-12">
 					 <form action="{{ route('user.store') }}" method="post">
                         {{ csrf_field() }}
-{{--                        <input type="hidden" name="active" value="1">--}}
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="form-group {{ $errors->has('firstName') ? 'has-error' : '' }}">
