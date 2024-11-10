@@ -1,0 +1,20 @@
+
+–	Web:S6819	"VUse <img> instead of the presentation role to ensure accessibility across all devices.(¯‘Ó†ıÿÿÿÿJ$7e6327d3-fb57-4cda-bdf0-c8681dac5ece
+˜%Web:ItemTagNotWithinContainerTagCheck	"<Surround this <li> item tag by a <ul> or <ol> container one.(¯‘Ó†ıÿÿÿÿJ$f5c95249-4472-46bd-9df1-7b078137cede
+–	Web:S6819"VUse <img> instead of the presentation role to ensure accessibility across all devices.(¯‘Ó†ıÿÿÿÿJ$cf891b2c-8467-4727-afc1-5dc54c03c454
+˜%Web:ItemTagNotWithinContainerTagCheck"<Surround this <li> item tag by a <ul> or <ol> container one.(¯‘Ó†ıÿÿÿÿJ$05e07d02-a185-4967-9e20-313fcae59f21
+’ Web:TableHeaderHasIdOrScopeCheck ";Add either an 'id' or a 'scope' attribute to this <th> tag.(Ûéú»ÿÿÿÿÿJ$d2797544-0f85-46fe-861b-5f59c1c5d8fd
+ Web:TableHeaderHasIdOrScopeCheck!";Add either an 'id' or a 'scope' attribute to this <th> tag.(Ù˜‘‘J$33ea8f7f-80c9-4bb2-819b-5c38726cf0fa
+’ Web:TableHeaderHasIdOrScopeCheck"";Add either an 'id' or a 'scope' attribute to this <th> tag.(£µåûÿÿÿÿJ$5c05c082-0f88-4fa3-8896-248356fa6627
+’ Web:TableHeaderHasIdOrScopeCheck#";Add either an 'id' or a 'scope' attribute to this <th> tag.(é™¦¸üÿÿÿÿJ$037c6fdc-a57b-4e00-8e64-1c45bc9038f6
+” Web:TableHeaderHasIdOrScopeCheck$";Add either an 'id' or a 'scope' attribute to this <th> tag.(€ÔÕı8ˆëü°2J$9e1d5bef-e221-4b95-ad51-bf8eeeb7ed70
+” Web:TableHeaderHasIdOrScopeCheck%";Add either an 'id' or a 'scope' attribute to this <th> tag.(³ÏÄƒ8‰ëü°2J$f2e3adef-2ddc-4125-a493-e747c6c6445c
+’ Web:TableHeaderHasIdOrScopeCheck&";Add either an 'id' or a 'scope' attribute to this <th> tag.(¥ÅÍ³ıÿÿÿÿJ$8b503e0a-2b80-480e-87a1-d05161bf1ffa
+’ Web:TableHeaderHasIdOrScopeCheck'";Add either an 'id' or a 'scope' attribute to this <th> tag.(´¬á·ÿÿÿÿÿJ$4462f6d7-b0aa-41a6-b7e1-8c8e4b089526
+’ Web:TableHeaderHasIdOrScopeCheck(";Add either an 'id' or a 'scope' attribute to this <th> tag.(¡’ÜñıÿÿÿÿJ$9ea501ab-8e26-45e3-9a58-12a6a1a77db1
+™ Web:TableHeaderHasIdOrScopeCheckn";Add either an 'id' or a 'scope' attribute to this <th> tag.(Ûéú»ÿÿÿÿÿ8ÌÃ¥ı°2J$f94fd358-2ccd-4f1f-a6b4-8c600373e0a3
+” Web:TableHeaderHasIdOrScopeChecko";Add either an 'id' or a 'scope' attribute to this <th> tag.(Ù˜‘‘8ÃüÂ±2J$39c7e29b-bd4f-4fa0-aebc-df55ccb10329
+’ Web:TableHeaderHasIdOrScopeCheckp";Add either an 'id' or a 'scope' attribute to this <th> tag.(¥ÅÍ³ıÿÿÿÿJ$522b660d-08be-4450-9fd6-13c4d414ef2b
+’ Web:TableHeaderHasIdOrScopeCheckq";Add either an 'id' or a 'scope' attribute to this <th> tag.(ë×„†øÿÿÿÿJ$f43500d2-29ac-4253-a8ab-3216d807ac1a
+’ Web:TableHeaderHasIdOrScopeCheckr";Add either an 'id' or a 'scope' attribute to this <th> tag.(¡’ÜñıÿÿÿÿJ$7059251e-62ca-45c9-a2d1-0a5723c1323c
+wphp:S105"EReplace all tab characters in this file by sequences of white-spaces.J$5856ff75-e7cc-4b2b-8ff7-898bd24be8d2

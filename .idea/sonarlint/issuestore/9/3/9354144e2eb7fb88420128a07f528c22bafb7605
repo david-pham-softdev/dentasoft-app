@@ -1,0 +1,6 @@
+
+–	Web:S6819	"VUse <img> instead of the presentation role to ensure accessibility across all devices.(―‘Σ†ύÿÿÿÿJ$9ad87414-ad4a-49f8-aad3-b882bac480c8
+%Web:ItemTagNotWithinContainerTagCheck	"<Surround this <li> item tag by a <ul> or <ol> container one.(―‘Σ†ύÿÿÿÿJ$6273b8f8-e421-4e93-98e2-85cc62fd8fc1
+UWeb:AvoidCommentedOutCodeCheckq"Remove this commented out code.(Πÿ…ύÿÿÿÿ8κ‚ÿ°2
+pWeb:AvoidCommentedOutCodeCheck¬"Remove this commented out code.(ωΚαJ$ffcd84ca-ac01-4e32-8dca-52ee0d1bc2a1
+wphp:S105"EReplace all tab characters in this file by sequences of white-spaces.J$4f948cad-394a-463b-8f64-4d77b726f50f
