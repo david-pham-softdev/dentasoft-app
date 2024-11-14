@@ -33,18 +33,11 @@ Route::group(['namespace' => 'App\Http\Controllers\User'], function (){
 	Route::get('/user/create', 'UserController@create')->name('user.create');
 	Route::post('/user/store', 'UserController@store')->name('user.store');
 	Route::get('/user/edit/{id}', 'UserController@edit')->name('user.edit');
-	Route::put('/user/update', 'UserController@update')->name('user.update');
+	Route::put('/user/update/{id}', 'UserController@update')->name('user.update');
 	Route::get('/user/edit/password/{id}', 'UserController@editPassword')->name('user.edit.password');
 	Route::put('/user/update/password/{id}', 'UserController@updatePassword')->name('user.update.password');
 	Route::get('/user/show/{id}', 'UserController@show')->name('user.show');
-	Route::get('/user/destroy/{email}/{company_code}', 'UserController@destroy')->name('user.destroy');
-	Route::get('/user/code-verify', 'UserController@codeVerify')->name('user.code.verify');
-	Route::post('/user/verify-code', 'UserController@sendVerifyCode')->name('user.verify-code');
-	Route::get('/user/resend-verify-code', 'UserController@resendVerifyCode')->name('user.resend.verify-code');
-	Route::get('/user/update/status/{id}', 'UserController@updateStatus')->name('user.update.status');
-	Route::get('/user/update/role/{id}', 'UserController@updateRole')->name('user.update.role');
-	Route::get('/user/edit/{id}/site', 'UserController@editSite')->name('user.site.edit');
-	Route::put('/user/update/{id}/site', 'UserController@updateSite')->name('user.site.update');
+	Route::get('/user/destroy/{id}', 'UserController@destroy')->name('user.destroy');
 	// Roles
 	Route::get('/role', 'RoleController@index')->name('role');
 	Route::get('/role/create', 'RoleController@create')->name('role.create');
@@ -53,4 +46,14 @@ Route::group(['namespace' => 'App\Http\Controllers\User'], function (){
 	Route::put('/role/update/{id}', 'RoleController@update')->name('role.update');
 	Route::get('/role/show/{id}', 'RoleController@show')->name('role.show');
 	Route::get('/role/destroy/{id}', 'RoleController@destroy')->name('role.destroy');
+});
+
+Route::group(['namespace' => 'App\Http\Controllers\Patient'], function (){ 
+	Route::get('/patient', 'PatientController@index')->name('patient');
+	Route::get('/patient/create', 'PatientController@create')->name('patient.create');
+	Route::post('/patient/store', 'PatientController@store')->name('patient.store');
+	Route::get('/patient/edit/{id}', 'PatientController@edit')->name('patient.edit');
+	Route::put('/patient/update/{id}', 'PatientController@update')->name('patient.update');
+	Route::get('/patient/show/{id}', 'PatientController@show')->name('patient.show');
+	Route::get('/patient/destroy/{id}', 'PatientController@destroy')->name('patient.destroy');
 });

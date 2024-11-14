@@ -27,7 +27,7 @@
                                 <div class="col-lg-6">
                                     <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                                         <label for="nome">Name</label>
-                                        <input type="text" name="name" class="form-control" maxlength="30" minlength="4" placeholder="Name" required="" autofocus value="{{$role->name}}">
+                                        <input type="text" name="name" class="form-control" maxlength="30" minlength="3" placeholder="Name" required="" autofocus value="{{$role->name}}">
                                         @if($errors->has('name'))
                                             <span class="help-block">
                                                 <strong>{{ $errors->first('name') }}</strong>

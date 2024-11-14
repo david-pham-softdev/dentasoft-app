@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\Role;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -50,9 +51,14 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|max:255|min:3',
+            // 'name' => 'required|string|max:255|min:3',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
+            'first_name' => 'required|string|max:255|min:3',
+            'last_name' => 'required|string|max:255|min:3',
+            'phone_number' => ['required', 'numeric', 'digits:10'],
+            'code_elab' => 'required|string|unique:users',
+            'role' => ['required', 'in:Dentist,Lab']
         ]);
     }
 
@@ -67,14 +73,19 @@ class RegisterController extends Controller
         $user = User::create([
             'active' => 1,
             'avatar' => 'img/config/nopic.png',
-            'name' => $data['name'],
+            // 'name' => $data['name'],
+            'name' => $data['first_name']. ' ' .$data['last_name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
+            'phone_number' => $data['phone_number'],
+            'code_elab' => $data['code_elab']
         ]);
 
-        $configs = Config::find(1);
-        
-        $user->roles()->sync($configs->default_role_id); // role id for those who register in the system
+        $role = Role::where('name', $data['role'])->first();
+
+        $user->roles()->sync($role->id); // role id for those who register in the system
 
         return $user;
     }

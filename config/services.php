@@ -30,10 +30,4 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
-    'dentasoft' => [
-        'host' => env('DENTASOFT_HOST'),
-        'email' => env('DENTASOFT_EMAIL'),
-        'api_key' => env('DENTASOFT_API_KEY'),
-    ],
-
 ];

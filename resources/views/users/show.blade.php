@@ -14,59 +14,45 @@
 
 @endsection
 
-@section('content')
-    @if (!empty($user))    
+@section('content')    
+    @if ($user->id != 1)    
         <div class="box box-primary">
     		<div class="box-body">
     			<div class="row">
     				<div class="col-md-12">	
     					<div class="col-lg-3 text-center">
                             <br>
-                            @if(file_exists(isset($user['avatar'])))
+                            @if(file_exists($user->avatar))
                               <img src="{{ asset($user->avatar) }}" class="profile-user-img img-responsive img-circle">
                             @else
-                              <img src="{{ asset('img/config/nopic.png') }}" class="profile-user-img img-responsive img-circle">
+                              <img src="{{ asset('public/img/config/nopic.png') }}" class="profile-user-img img-responsive img-circle">
                             @endif
                             <h3 class="profile-username text-center">
-                                {{ $user['FirstName']. ' '. $user['LastName'] }}    
+                                {{ $user->name }}    
                             </h3>                        
-                            @if($user['Status'] === 'Active')
+                            @if($user->active == true)
                                 <span class="label label-success">Active</span>
                             @else
                                 <span class="label label-danger">Inactive</span>
                             @endif                        
                         </div>
                         <div class="col-lg-9">
-                            <div class="attachment row">
-                                <div class="col-lg-6">
-                                    <h4><b>E-mail: </b></h4>
-                                    <span>{{ $user['Email'] ?? 'N/A' }}</span>
-                                    <h4><b>Phone: </b></h4>
-                                    <span>{{ $user['Phone'] ?? 'N/A' }}</span>
-                                    <h4><b>Role</b></h4>
-                                    <span class="label label-primary">{{ $user['Role'] ?? 'N/A' }}</span>
-                                </div>
-                                <div class="col-lg-6">
-                                    <h4><b>Company Code: </b></h4>
-                                    <span>{{ $user['company_code'] ?? 'N/A' }}</span>
-                                    <h4><b>Site Name: </b></h4>
-                                    <span>{{ !empty($user['site_name']) ? $user['site_name'] : 'N/A' }}</span>
-                                    <h4><b>Site Url: </b></h4>
-                                    <span>{{ !empty($user['site_phone']) ? $user['site_phone'] : 'N/A' }}</span>
-                                    <h4><b>Site Phone: </b></h4>
-                                    <span>{{ !empty($user['site_phone']) ? $user['site_phone']  : 'N/A' }}</span>
-                                    <br>
-                                    <br>
-                                    <a href="{{ route('user.site.edit', $user['Id']) }}" title="Edit {{ $user['FirstName']. ' '. $user['LastName'] }}"><button type="button" class="btn btn-warning btn-sm btn-flat"><i class="fa fa-pencil"></i> Edit Site</button></a>
-                                </div>
-                                
-                                <div class="col-lg-12 pull-right"> 
-                                    <br>
-                                    <br>
-                                    @if($user['Email_Verify'] !== "true")                           
-                                    <a href="/user/code-verify?email={{$user['Email']}}" title="Code Verify {{ $user['FirstName']. ' '. $user['LastName'] }}"><button type="button" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-key"></i> Code Verify</button></a>
-                                    @endif
-                                    <a href="{{ route('user.edit', $user['Id']) }}" title="Edit {{ $user['FirstName']. ' '. $user['LastName'] }}"><button type="button" class="btn btn-warning btn-sm btn-flat"><i class="fa fa-pencil"></i> Edit</button></a>
+                            <div class="attachment">
+                                <h4><b>E-mail: </b></h4>
+                                <span>{{ $user->email }}</span>
+                                <h4><b>Permission Group</b></h4>
+                                @foreach($roles as $role)
+                                    @if(in_array($role->id, $roles_ids))
+                                        <span class="label label-primary">{{ $role->name }}</span> 
+                                    @endif                                             
+                                @endforeach
+                                <br><br>
+                                <p class="help-block"><i class="fa fa-clock-o"></i> Created on: {{$user->created_at->format('d/m/Y H:i') }}</p>
+                                <p class="help-block"><i class="fa fa-refresh"></i> Last update: {{$user->updated_at->format('d/m/Y H:i') }}</p>
+                                <br>
+                                <div class="pull-right">                            
+                                    <a href="{{ route('user.edit.password', $user->id) }}" title="Change Password {{ $user->name }}"><button type="button" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-key"></i> Change Password</button></a>
+                                    <a href="{{ route('user.edit', $user->id) }}" title="Edit {{ $user->name }}"><button type="button" class="btn btn-warning btn-sm btn-flat"><i class="fa fa-pencil"></i> Edit</button></a>
                                 </div>
                             </div>
                         </div>
