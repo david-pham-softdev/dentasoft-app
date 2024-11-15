@@ -57,3 +57,15 @@ Route::group(['namespace' => 'App\Http\Controllers\Patient'], function (){
 	Route::get('/patient/show/{id}', 'PatientController@show')->name('patient.show');
 	Route::get('/patient/destroy/{id}', 'PatientController@destroy')->name('patient.destroy');
 });
+
+Route::group(['namespace' => 'App\Http\Controllers\ElabCode'], function (){ 
+	Route::get('/laboratory', 'ElabCodeController@index')->name('laboratory');
+	Route::get('/laboratory/create', 'ElabCodeController@create')->name('laboratory.create');
+	Route::get('/laboratory/edit/{id}', 'ElabCodeController@edit')->name('laboratory.edit');
+	Route::put('/laboratory/update/{id}', 'ElabCodeController@update')->name('laboratory.update');
+	Route::get('/laboratory/show/{id}', 'ElabCodeController@show')->name('laboratory.show');
+
+	Route::get('/laboratory/destroy/{id}', 'ElabCodeController@destroy')->name('laboratory.destroy');
+	Route::post('/elabcode/store', 'ElabCodeController@store')->name('elabcode.store');
+
+});

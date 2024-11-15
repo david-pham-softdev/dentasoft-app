@@ -39,6 +39,11 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    public function viewRegister()
+    {
+        return view('auth.register-test');
+    }
+
     protected function credentials(Request $request) {
         return ['email' => $request->{$this->username()}, 'password' => $request->password, 'active' => 1];
     }

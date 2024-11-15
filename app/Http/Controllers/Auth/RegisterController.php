@@ -73,14 +73,14 @@ class RegisterController extends Controller
         $user = User::create([
             'active' => 1,
             'avatar' => 'img/config/nopic.png',
-            // 'name' => $data['name'],
             'name' => $data['first_name']. ' ' .$data['last_name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
             'phone_number' => $data['phone_number'],
-            'code_elab' => $data['code_elab']
+            'code_elab' => $data['code_elab'],
+            'company' => $data['company']
         ]);
 
         $role = Role::where('name', $data['role'])->first();

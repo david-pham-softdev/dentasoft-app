@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Patient;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Patient\StorePatientRequest;
+use App\Http\Requests\Patient\UpdatePatientRequest;
 use App\Models\Patient;
 use Illuminate\Http\Request;
-use App\Http\Requests\User\UpdateUserRequest;
 use App\Http\Requests\User\UpdatePasswordUserRequest;
 use App\Models\User;
 use App\Models\Role;
@@ -16,7 +16,7 @@ class PatientController extends Controller
 {
     public function index()
     {
-        // $this->authorize('show-user', User::class);
+        $this->authorize('show-patient', User::class);
 
         $patients = Patient::where('user_id', Auth::id())->paginate(15);
 
@@ -25,7 +25,7 @@ class PatientController extends Controller
 
     public function show($id)
     {
-    	$this->authorize('show-user', User::class);
+    	$this->authorize('show-patient', User::class);
 
     	$user = User::find($id);
 
@@ -43,7 +43,7 @@ class PatientController extends Controller
 
     public function create()
     {
-        // $this->authorize('create-user', User::class);
+        $this->authorize('create-patient', User::class);
 
         $roles = Role::all();
 
@@ -52,7 +52,8 @@ class PatientController extends Controller
 
     public function store(StorePatientRequest $request)
     {
-        // $this->authorize('create-user', User::class);
+        $this->authorize('create-patient', User::class);
+
         Patient::create(array_merge($request->all(), ['user_id' => Auth::id()]));
         $this->flashMessage('check', 'User successfully added!', 'success');
 
@@ -61,93 +62,50 @@ class PatientController extends Controller
 
     public function edit($id)
     {
-    	$this->authorize('edit-user', User::class);
+    	$this->authorize('edit-patient', User::class);
 
-    	$user = User::find($id);
+    	$patient = Patient::find($id);
 
-    	if(!$user){
-        	$this->flashMessage('warning', 'User not found!', 'danger');
-            return redirect()->route('user');
+    	if(!$patient){
+        	$this->flashMessage('warning', 'Patient not found!', 'danger');
+            return redirect()->route('patient');
         }
 
-        $roles = Role::all();
-
-		$roles_ids = Role::rolesUser($user);
-
-        return view('users.edit',compact('user', 'roles', 'roles_ids'));
+        return view('patients.edit', compact('patient'));
     }
 
-    public function update(UpdateUserRequest $request,$id)
+    public function update(UpdatePatientRequest $request,$id)
     {
-    	$this->authorize('edit-user', User::class);
+    	$this->authorize('edit-patient', User::class);
 
-    	$user = User::find($id);
+    	$patient = Patient::find($id);
 
-        if(!$user){
-        	$this->flashMessage('warning', 'User not found!', 'danger');
-            return redirect()->route('user');
+        if(!$patient){
+        	$this->flashMessage('warning', 'Patient not found!', 'danger');
+            return redirect()->route('patient');
         }
 
-        $user->update($request->all());
+        $patient->update($request->all());
 
-        $roles = $request->input('roles') ? $request->input('roles') : [];
+        $this->flashMessage('check', 'Patient updated successfully!', 'success');
 
-        $user->roles()->sync($roles);
-
-        $this->flashMessage('check', 'User updated successfully!', 'success');
-
-        return redirect()->route('user');
-    }
-
-    public function updatePassword(UpdatePasswordUserRequest $request,$id)
-    {
-    	$this->authorize('edit-user', User::class);
-
-    	$user = User::find($id);
-
-        if(!$user){
-        	$this->flashMessage('warning', 'User not found!', 'danger');
-            return redirect()->route('user');
-        }
-
-        $request->merge(['password' => bcrypt($request->get('password'))]);
-
-        $user->update($request->all());
-
-        $this->flashMessage('check', 'User password updated successfully!', 'success');
-
-        return redirect()->route('user');
-    }
-
-    public function editPassword($id)
-    {
-    	$this->authorize('edit-user', User::class);
-
-    	$user = User::find($id);
-
-    	if(!$user){
-        	$this->flashMessage('warning', 'User not found!', 'danger');
-            return redirect()->route('user');
-        }
-
-        return view('users.edit_password',compact('user'));
+        return redirect()->route('patient');
     }
 
     public function destroy($id)
     {
-        $this->authorize('destroy-user', User::class);
+        $this->authorize('destroy-patient', User::class);
 
-        $user = User::find($id);
+        $patient = Patient::find($id);
 
-        if(!$user){
-            $this->flashMessage('warning', 'User not found!', 'danger');
-            return redirect()->route('user');
+        if(!$patient){
+        	$this->flashMessage('warning', 'Patient not found!', 'danger');
+            return redirect()->route('patient');
         }
 
-        $user->delete();
+        $patient->delete();
+        $this->flashMessage('check', 'Patient successfully deleted!', 'success');
 
-        $this->flashMessage('check', 'User successfully deleted!', 'success');
-
-        return redirect()->route('user');
+        return redirect()->route('patient');
     }
 }

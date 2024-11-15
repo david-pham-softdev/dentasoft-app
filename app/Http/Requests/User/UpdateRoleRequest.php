@@ -21,7 +21,7 @@ class UpdateRoleRequest extends Request
 	public function rules() 
 	{ 
 		return [ 			
-			'name' => 'required|string|min:4|max:255',
+			'name' => 'required|string|min:2|max:255',
 		]; 
 	} 
 }
