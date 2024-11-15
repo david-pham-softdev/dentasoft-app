@@ -59,14 +59,25 @@
          <div class="section functionality-section">
             <div class="section-content">
                <div class="card-deck">
-                  <a class="card text-center" href="" data-toggle="modal" data-target="#modal-add-elab-code">
-                     <div class="card-title">
-                        <div class="icon-wrapper"><i class="las la-clinic-medical"></i></div>
-                     </div>
-                     <div class="card-body">
-                        <p>add a laboratories</p>
-                     </div>
-                  </a>
+                  @if (Auth::user()->can('root-dentist', '') || Auth::user()->can('root-lab', ''))
+                     <a class="card text-center" href="" data-toggle="modal" data-target="#modal-add-elab-code">
+                        <div class="card-title">
+                           <div class="icon-wrapper"><i class="las la-clinic-medical"></i></div>
+                        </div>
+                        <div class="card-body">
+                           <p>add a laboratories</p>
+                        </div>
+                     </a>
+                  @else
+                     <a class="card text-center" href="#">
+                        <div class="card-title">
+                           <div class="icon-wrapper"><i class="las la-clinic-medical"></i></div>
+                        </div>
+                        <div class="card-body">
+                           <p>add a users</p>
+                        </div>
+                     </a>
+                  @endif
                   <div class="modal fade" id="modal-add-elab-code">
                      <div class="modal-dialog">
                            <div class="modal-content">
@@ -100,7 +111,7 @@
                            </div>
                      </div>
                   </div>
-                  <a class="card text-center" href="{{ route('patient.create') }}">
+                  <a class="card text-center" href="{{ Auth::user()->can('root-dentist', '') || Auth::user()->can('root-lab', '') ? route('patient.create') : '#'}}">
                      <div class="card-title">
                         <div class="icon-wrapper"><i class="las la-user-md"></i></div>
                      </div>
@@ -108,7 +119,7 @@
                         <p>add a patients</p>
                      </div>
                   </a>
-                  <a class="card text-center" href="">
+                  <a class="card text-center" href="#">
                      <div class="card-title">
                         <div class="icon-wrapper"><i class="las la-user-plus"></i></div>
                      </div>

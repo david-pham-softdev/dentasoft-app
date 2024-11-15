@@ -19,7 +19,7 @@ class ElabCodeController extends Controller
 {
     public function index()
     {
-        $this->authorize('show-elab', UserElab::class);
+        $this->authorize('show-elab', User::class);
         $labIds = UserElab::where('from_user_id', Auth::id())->pluck('to_user_id')->toArray();
         $laboratories = User::whereHas('roles', function ($query) {
             $query->where('name', 'Lab');

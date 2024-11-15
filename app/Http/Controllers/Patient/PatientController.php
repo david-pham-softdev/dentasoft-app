@@ -18,6 +18,10 @@ class PatientController extends Controller
     {
         $this->authorize('show-patient', User::class);
 
+        if (Auth::user()->hasAnyRoles('Administrators')) {
+            $patients = Patient::paginate(15);
+            return view('patients.index', compact('patients'));
+        }
         $patients = Patient::where('user_id', Auth::id())->paginate(15);
 
         return view('patients.index', compact('patients'));
@@ -30,7 +34,7 @@ class PatientController extends Controller
     	$user = User::find($id);
 
     	if(!$user){
-        	$this->flashMessage('warning', 'User not found!', 'danger');
+        	$this->flashMessage('warning', 'Patient not found!', 'danger');
             return redirect()->route('user');
         }
 
@@ -55,7 +59,7 @@ class PatientController extends Controller
         $this->authorize('create-patient', User::class);
 
         Patient::create(array_merge($request->all(), ['user_id' => Auth::id()]));
-        $this->flashMessage('check', 'User successfully added!', 'success');
+        $this->flashMessage('check', 'Patient successfully added!', 'success');
 
         return redirect()->route('patient');
     }
