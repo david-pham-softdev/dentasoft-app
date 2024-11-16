@@ -76,8 +76,8 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin'], function (){
 });
 
 Route::group(['namespace' => 'App\Http\Controllers\Setting'], function (){ 
-	Route::get('/profile', 'SettingController@index')->name('profile');
-	Route::put('/profile/update/profile/{id}', 'SettingController@updateProfile')->name('profile.update.profile');
-	Route::put('/profile/update/password/{id}', 'SettingController@updatePassword')->name('profile.update.password');
-	Route::put('/profile/update/avatar/{id}', 'SettingController@updateAvatar')->name('profile.update.avatar');
+	Route::get('/setting', 'ProfileController@index')->name('setting');
+	Route::put('/setting/update/profile/{id}', 'ProfileController@updateProfile')->name('setting.update.profile');
+	Route::put('/setting/update/password/{id}', 'ProfileController@updatePassword')->name('setting.update.password');
+	Route::put('/setting/update/avatar/{id}', 'ProfileController@updateAvatar')->name('setting.update.avatar');
 });

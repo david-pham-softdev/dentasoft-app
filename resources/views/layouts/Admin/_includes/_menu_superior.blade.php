@@ -55,7 +55,7 @@
                 </a>
                 <div class="dropdown">
                   <div class="dropdown-menu shadow-lg profile-dropdown-menu" aria-labelledby="profile-dropdown">
-                      <a class="dropdown-item" href="#"><i class="las la-user mr-2"></i>profile</a>
+                      <a class="dropdown-item" href="/setting"><i class="las la-user mr-2"></i>profile</a>
                       <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault();document.getElementById('logout-form').submit();"><i class="las la-cog mr-2"></i>Logout</a>
                       <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         {{ csrf_field() }}

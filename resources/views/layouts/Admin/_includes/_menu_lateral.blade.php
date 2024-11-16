@@ -29,5 +29,9 @@
 		</a>
 		@endif
 		<hr class="divider"/>
+		<a class="list-group-item {{ Request::segment(1) === 'setting' ? 'active' : null }}" href="{{route('setting')}}" data-toggle="tooltip" data-placement="bottom" title="Settings">
+            <i class="las la-cogs la-lw"></i>
+            <span>settings</span>
+          </a>
 	</ul>
 </div>
