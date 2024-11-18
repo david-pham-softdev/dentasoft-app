@@ -78,7 +78,10 @@
                                   </div>
                                   <div class="form-group">
                                     <button type="submit" class="btn btn-block btn-dark-red-f-gr mt-4 pull-center">Login</button>
-                                    <a href="{{route('register')}}" class="btn btn-block btn-dark-blue-f mt-4 pull-center">Register</a>
+                                    <a href="{{route('register')}}" class="btn btn-block btn-dark-blue-f mt-2 pull-center">Register</a>
+                                    <div class="col-xs-12 mt-2 text-center">                            
+                                       <a href="{{ route('password.request') }}">Forgot password?</a>                                     
+                                    </div>
                                   </div> 
                                 </div>
                             </form>

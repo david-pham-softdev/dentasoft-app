@@ -16,18 +16,18 @@ Route::put('/config/update/permission_group/{id}', 'App\Http\Controllers\ConfigC
 Route::post('/config/store/permission', 'App\Http\Controllers\ConfigController@storePermission')->name('config.store.permission');
 Route::put('/config/update/permission/{id}', 'App\Http\Controllers\ConfigController@updatePermission')->name('config.update.permission');
 
-Route::group(['namespace' => 'App\Http\Controllers\Profile'], function (){ 
+Route::group(['namespace' => 'App\Http\Controllers\Profile'], function (){
 	Route::get('/profile', 'ProfileController@index')->name('profile');
 	Route::put('/profile/update/profile/{id}', 'ProfileController@updateProfile')->name('profile.update.profile');
 	Route::put('/profile/update/password/{id}', 'ProfileController@updatePassword')->name('profile.update.password');
 	Route::put('/profile/update/avatar/{id}', 'ProfileController@updateAvatar')->name('profile.update.avatar');
 });
 
-Route::group(['namespace' => 'App\Http\Controllers\Error'], function (){ 
+Route::group(['namespace' => 'App\Http\Controllers\Error'], function (){
 	Route::get('/unauthorized', 'ErrorController@unauthorized')->name('unauthorized');
 });
 
-Route::group(['namespace' => 'App\Http\Controllers\User'], function (){ 
+Route::group(['namespace' => 'App\Http\Controllers\User'], function (){
 	//Users
 	Route::get('/user', 'UserController@index')->name('user');
 	// Route::get('/user/create', 'UserController@create')->name('user.create');
@@ -48,7 +48,7 @@ Route::group(['namespace' => 'App\Http\Controllers\User'], function (){
 	// Route::get('/role/destroy/{id}', 'RoleController@destroy')->name('role.destroy');
 });
 
-Route::group(['namespace' => 'App\Http\Controllers\Patient'], function (){ 
+Route::group(['namespace' => 'App\Http\Controllers\Patient'], function (){
 	Route::get('/patient', 'PatientController@index')->name('patient');
 	Route::get('/patient/create', 'PatientController@create')->name('patient.create');
 	Route::post('/patient/store', 'PatientController@store')->name('patient.store');
@@ -58,7 +58,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Patient'], function (){
 	Route::get('/patient/destroy/{id}', 'PatientController@destroy')->name('patient.destroy');
 });
 
-Route::group(['namespace' => 'App\Http\Controllers\ElabCode'], function (){ 
+Route::group(['namespace' => 'App\Http\Controllers\ElabCode'], function (){
 	Route::get('/laboratory', 'ElabCodeController@index')->name('laboratory');
 	Route::get('/laboratory/create', 'ElabCodeController@create')->name('laboratory.create');
 	Route::get('/laboratory/edit/{id}', 'ElabCodeController@edit')->name('laboratory.edit');
@@ -69,13 +69,13 @@ Route::group(['namespace' => 'App\Http\Controllers\ElabCode'], function (){
 	Route::post('/elabcode/store', 'ElabCodeController@store')->name('elabcode.store');
 });
 
-Route::group(['namespace' => 'App\Http\Controllers\Admin'], function (){ 
+Route::group(['namespace' => 'App\Http\Controllers\Admin'], function (){
 	//Users
 	Route::get('/user', 'UserController@index')->name('admin.user');
 	Route::get('/user/show/{id}', 'UserController@show')->name('admin.user.show');
 });
 
-Route::group(['namespace' => 'App\Http\Controllers\Setting'], function (){ 
+Route::group(['namespace' => 'App\Http\Controllers\Setting'], function (){
 	Route::get('/setting', 'ProfileController@index')->name('setting');
 	Route::put('/setting/update/profile/{id}', 'ProfileController@updateProfile')->name('setting.update.profile');
 	Route::put('/setting/update/password/{id}', 'ProfileController@updatePassword')->name('setting.update.password');
