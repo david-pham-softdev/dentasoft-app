@@ -29,13 +29,13 @@
 					</span>
 				</a>
 				<ul class="treeview-menu">
-					<!-- @if (Auth::user()->can('root-dev', ''))
+					@if (Auth::user()->can('root-dev', ''))
 						<li class="{{ Request::segment(1) === 'config' && Request::segment(2) === null ? 'active' : null }}">
 							<a href="{{ route('config') }}" title="App Config">
 								<i class="fa fa-gear"></i> <span> Settings App</span>
 							</a>
 						</li>
-					@endif					 -->
+					@endif					
 					<li class="
 						{{ Request::segment(1) === 'user' ? 'active' : null }}
 						{{ Request::segment(1) === 'role' ? 'active' : null }}

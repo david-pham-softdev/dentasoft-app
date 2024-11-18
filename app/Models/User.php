@@ -25,7 +25,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'active'
+        'name', 'email', 'password', 'active', 'first_name', 'last_name', 'phone_number', 'code_elab', 'company'
     ];
 
     /**
@@ -41,7 +41,7 @@ class User extends Authenticatable
     {
         return $this->can('root-dev', '');
     }
-    
+
     public function roles()
     {
         return $this->belongsToMany(Role::class);
@@ -51,13 +51,13 @@ class User extends Authenticatable
     {
         return $this->hasAnyRoles($permission->roles);
     }
-    
+
     public function hasAnyRoles($roles)
     {
         if(is_array($roles) || is_object($roles) ) {
             return !! $roles->intersect($this->roles)->count();
         }
-        
+
         return $this->roles->contains('name', $roles);
     }
 
