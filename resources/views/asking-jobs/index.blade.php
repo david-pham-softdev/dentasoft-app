@@ -46,7 +46,8 @@
                      <td>{{ $asking_job->material->name }}</td>
                      <td>{{ $asking_job->formatted_delivery_date ?? 'N/A' }}</td>
                      <td>{{ $asking_job->formatted_delivery_time ?? 'N/A' }}</td>
-                     <td>
+                     <td width="200px">
+                        <a class="btn btn-default  btn-xs" href="{{ route('asking-job.show', $asking_job->id) }}" title="View"><i class="la la-eye"></i></a>
                         <a class="btn btn-warning  btn-xs" href="{{ route('asking-job.edit', $asking_job->id) }}" title="Edit"><i class="la la-pencil"></i></a>
                         <a class="btn btn-danger  btn-xs" href="#" title="Delete" data-toggle="modal" data-target="#modal-delete-{{ $asking_job->id }}"><i class="la la-trash"></i></a>
                      </td>

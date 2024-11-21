@@ -13,6 +13,7 @@ use App\Models\User;
 use App\Models\UserElab;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class AskingJobController extends Controller
@@ -60,13 +61,25 @@ class AskingJobController extends Controller
             }
         }
 
+        $dentalChartPath = '';
+        if ($request->input('dental_chart')) {
+            $base64Image = $request->input('dental_chart');
+            $fileData = explode(';base64,', $base64Image);
+            $fileType = explode('/', $fileData[0])[1];
+            $fileContent = base64_decode($fileData[1]);
+            $fileName = uniqid() . '.' . $fileType;
+            $dentalChartPath = 'uploads/' . $fileName;
+
+            Storage::disk('public')->put($dentalChartPath, $fileContent);
+        }
+
         AskingJob::create([
             'user_id' => Auth::id(),
             'patient_id' => $request->input('patient_id'),
             'user_elab_id' => $request->input('user_elab_id'),
             'tooth_number' => $request->input('tooth_number'),
             'shade' => $request->input('shade'),
-            'dental_chart' => $request->input('dental_chart'),
+            'dental_chart' => $dentalChartPath,
             'material_id' => $request->input('material_id'),
             'notes' => $request->input('notes'),
             'work_delivery_date' => $request->input('work_delivery_date'),
@@ -77,6 +90,22 @@ class AskingJobController extends Controller
         $this->flashMessage('check', 'Asking Job successfully added!', 'success');
 
         return redirect()->route('asking-job');
+    }
+
+    public function show($id)
+    {
+        // $this->authorize('show-user', User::class);
+
+    	$asking_job = AskingJob::with('patient', 'userElab', 'material', 'user')
+            ->where('id', $id)
+            ->first();
+        // dd($asking_job->attachment);
+    	if(!$asking_job){
+        	$this->flashMessage('warning', 'Asking Job not found!', 'danger');
+            return redirect()->route('asking-job');
+        }
+
+        return view('asking-jobs.show', compact('asking_job'));
     }
 
     public function edit($id)

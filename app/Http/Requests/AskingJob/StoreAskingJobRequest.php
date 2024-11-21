@@ -28,13 +28,13 @@ class StoreAskingJobRequest extends FormRequest
             'user_elab_id' => 'required|numeric:exists:users,id',
             'tooth_number' => 'required|numeric|min:1|max:32',
             'shade' => 'required|string|min:1|max:255',
-            // 'dental_chart' => 'required|string|min:1|max:255',
             'material_id' => 'required|numeric:exists:materials,id',
             'notes' => 'required|string|min:10',
             'work_delivery_date' => 'required|date',
             'work_delivery_time' => 'required|date_format:H:i',
             'delivery_remarks' => 'required|string|min:10',
-            'attachments.*' => 'file|max:1048|mimes:jpeg,png,jpg,gif,svg'
+            'attachments.*' => 'file|max:1048|mimes:jpeg,png,jpg,gif,svg',
+            'dental_chart' => 'required'
         ];
     }
 }

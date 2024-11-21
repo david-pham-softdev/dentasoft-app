@@ -128,8 +128,24 @@
                                     @endif
                                  </div>
                               </div>
-                               <div class="col-lg-6">
-                               </div>
+                              <div class="col-lg-6">
+                              </div>
+                              <div class="col-lg-12">
+                                 <div class="form-group">
+                                    <label for="nome drawing">dental chart:</label>
+                                    <div class="mb-3">
+                                       <canvas id="drawingCanvas" width="700" height="350" style="border:1px solid #ccc;"></canvas>
+                                    </div>
+                                    <button id="saveDrawing" class="btn btn-primary btn-file">Save Chart</button>
+                                       <span id="saveMessage"></span>
+                                    <input type="hidden" id="drawingData" name="dental_chart" class="{{ $errors->has('dental_chart') ? 'is-invalid' : '' }}">
+                                    @if($errors->has('dental_chart'))
+                                       <span class="invalid-feedback">
+                                          <strong>{{ $errors->first('dental_chart') }}</strong>
+                                       </span>
+                                    @endif
+                                 </div>
+                              </div>
                               <div class="col-lg-6">
                                  <div class="form-group">
                                     <label for="nome">Notes:</label>
@@ -180,16 +196,6 @@
          </div>
       </div>
    </div>
-   <footer>
-      <div class="page-footer text-center">
-         <div class="fixed-bottom shadow-sm">
-         <a href="https://covid19.who.int" target="_blank">
-            <img src="../SiteAssets/images/covid-19.svg" />
-            <span>view COVID-19 info</span>
-         </a>
-         </div>
-      </div>
-   </footer>
 </div>
 @endsection
 
@@ -216,6 +222,69 @@
          return filename.replace('(', '_').replace(']', '_');
       }
    });
+
+
+
+
+      const host = window.location.origin;
+		var canvas = document.getElementById('drawingCanvas');
+		var ctx = canvas.getContext('2d');
+		var drawing = false;
+		var lastX = 0;
+		var lastY = 0;
+		var backgroundImage = new Image();
+
+		backgroundImage.onload = function() {
+			ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+		}
+		backgroundImage.src =  host + '/img/asking-job/Dental-Chart-1024x487.png'; // Replace with the URL of your image
+
+		canvas.addEventListener('mousedown', function(e) {
+			drawing = true;
+			lastX = e.offsetX;
+			lastY = e.offsetY;
+		});
+
+		canvas.addEventListener('mousemove', function(e) {
+			if (drawing) {
+				ctx.beginPath();
+				ctx.moveTo(lastX, lastY);
+				ctx.lineTo(e.offsetX, e.offsetY);
+				ctx.stroke();
+				lastX = e.offsetX;
+				lastY = e.offsetY;
+			}
+		});
+
+		canvas.addEventListener('mouseup', function() {
+			drawing = false;
+		});
+
+		canvas.addEventListener('mouseleave', function() {
+			drawing = false;
+		});
+
+        var canvasChanged = false;
+
+        canvas.addEventListener('mousedown', function(e) {
+            drawing = true;
+            lastX = e.offsetX;
+            lastY = e.offsetY;
+            canvasChanged = true; // Indique que le canvas a été modifié
+        });
+
+        document.getElementById('saveDrawing').addEventListener('click', function(e) {
+            e.preventDefault();
+            if (canvasChanged) {
+                var drawingData = canvas.toDataURL('image/png');
+                document.getElementById('drawingData').value = drawingData;
+                document.getElementById('saveMessage').textContent = 'Saved!';
+                document.getElementById('saveMessage').style.color = 'green';
+            } else {
+                document.getElementById('saveMessage').textContent = 'No drawing to save.';
+                document.getElementById('saveMessage').style.color = 'red';
+            }
+        });
 </script>
 @endsection
 

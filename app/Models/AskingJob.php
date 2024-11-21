@@ -9,7 +9,7 @@ use App\Models\User;
 class AskingJob extends Model
 {
     protected $table = 'asking_jobs';
-	protected $fillable = ['user_id', 'patient_id', 'user_elab_id', 'tooth_number', 'shade', 'dental_chart', 'material_id', 'notes', 'work_delivery_date', 'work_delivery_time', 'delivery_remarks', 'attachment'];
+	protected $fillable = ['id', 'user_id', 'patient_id', 'user_elab_id', 'tooth_number', 'shade', 'dental_chart', 'material_id', 'notes', 'work_delivery_date', 'work_delivery_time', 'delivery_remarks', 'attachment'];
 
     public function userElab()
     {
