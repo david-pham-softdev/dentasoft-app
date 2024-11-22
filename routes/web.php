@@ -9,6 +9,7 @@ Auth::routes();
 
 Route::get('/', 'App\Http\Controllers\HomeController@index');
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
+Route::get('/async', 'App\Http\Controllers\CommandController@runCommand');
 
 Route::group(['namespace' => 'App\Http\Controllers\Profile'], function (){
 	Route::get('/profile', 'ProfileController@index')->name('profile');
