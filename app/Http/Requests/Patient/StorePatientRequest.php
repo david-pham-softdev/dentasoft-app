@@ -22,13 +22,13 @@ class StorePatientRequest extends FormRequest
      * @return array
      */
     public function rules()
-    { 
-		return [ 
+    {
+		return [
 			'first_name' => 'required|string|min:1|max:255',
 			'last_name' => 'required|string|min:1|max:255',
             'email' => 'string|email|max:255',
-            'age' => 'required|',
+            'age' => 'required|numeric',
             'gender' => ['required', 'in:female,male']
-		]; 
-	} 
+		];
+	}
 }
