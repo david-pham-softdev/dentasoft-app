@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AskingJob\AskingJobController;
 use App\Http\Controllers\Api\ELab\ElabCodeController;
+use App\Http\Controllers\Api\Material\MaterialController;
 use App\Http\Controllers\Api\Patient\PatientController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -47,5 +48,9 @@ Route::group([
         Route::post('', [AskingJobController::class, 'store']);
         Route::post('/{id}', [AskingJobController::class, 'update']);
         Route::delete('/{id}', [AskingJobController::class, 'destroy']);
+    });
+
+    Route::group(['prefix' => 'materials'], function () {
+        Route::get('', [MaterialController::class, 'index']);
     });
 });

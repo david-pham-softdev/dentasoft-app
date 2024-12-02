@@ -16,7 +16,7 @@ class AskingJobResource extends JsonResource
     {
         $attachments = json_decode($this->attachment);
         foreach ($attachments as $key => $attachment) {
-            $attachments[$key]->path = config('app.url').'/'.$attachment->path;
+            $attachments[$key]->path = config('app.url').'/storage/app/public/'.$attachment->path;
         }
         return [
             'id' => $this->id,
@@ -29,7 +29,7 @@ class AskingJobResource extends JsonResource
             'user' => $this->user,
             'tooth_number' => $this->tooth_number,
             'shade' => $this->shade,
-            'dental_chart' => config('app.url').'/'.$this->dental_chart,
+            'dental_chart' => config('app.url').'/storage/app/public/'.$this->dental_chart,
             'notes' => $this->notes,
             'work_delivery_date' => $this->work_delivery_date,
             'work_delivery_time' => $this->work_delivery_time,
