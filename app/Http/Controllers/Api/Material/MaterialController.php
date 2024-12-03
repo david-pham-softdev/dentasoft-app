@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api\Material;
 
 use App\Http\Controllers\Api\Controller;
+use App\Http\Requests\Material\StoreMaterialRequest;
+use App\Http\Requests\Material\UpdateMaterialRequest;
 use App\Http\Requests\Patient\StorePatientRequest;
 use App\Http\Requests\Patient\UpdatePatientRequest;
 use App\Models\Material;
@@ -16,61 +18,51 @@ class MaterialController extends Controller
     public function index()
     {
         $materials = Material::orderBy('created_at', 'desc')->paginate(15);
-        if (empty($materials)) {
-            return $this->responseError([], 'No material found!');
-        }
         return $this->responseSuccess(['materials' => $materials]);
     }
 
-    public function show($id)
+    public function getByUser()
     {
-        $patient = Patient::where('id', $id)->where('user_id', Auth::id())->first();
-        if(!$patient){
-            return $this->responseError([], 'Patient not found!', 404);
-        }
-
-        return $this->responseSuccess($patient);
+        $materials = Material::where('user_id', Auth::id())->orderBy('created_at', 'desc')->paginate(15);
+        return $this->responseSuccess(['materials' => $materials]);
     }
 
-    public function store(StorePatientRequest $request)
+    public function store(StoreMaterialRequest $request)
     {
-        $exists = Patient::where('email', $request->email)->where('user_id', Auth::id())->first();
-        if ($exists) {
-            return $this->responseError([], 'Patient already exists!');
+        $materialExists = Material::where('name', $request->name)->first();
+        if ($materialExists) {
+            return $this->responseError([], 'Material already exists!');
         }
-        Patient::create(array_merge($request->all(), ['user_id' => Auth::id()]));
+        Material::create(array_merge($request->all(), ['user_id' => Auth::id()]));
 
-        return $this->responseSuccess([], 'Patient successfully added!');
+        return $this->responseSuccess([], 'Material successfully added!');
     }
 
-    public function update(UpdatePatientRequest $request,$id)
+    public function update(UpdateMaterialRequest $request,$id)
     {
-    	$patient = Patient::where('id', $id)->where('user_id', Auth::id())->first();
-
-        if(!$patient){
-        	return $this->responseError([], 'Patient not found!', 404);
+        $material = Material::where('id', $id)->where('user_id', Auth::id())->first();
+        if(!$material){
+            return $this->responseError([], 'Material not found!', 404);
         }
 
-        $patientExists = Patient::where('email', $request->email)->where('user_id', Auth::id())->first();
-
-        if ($patientExists && $patientExists->id != $patient->id) {
-            return $this->responseError([], 'Patient already exists!');
+        $materialExists = Material::where('name', $request->name)->first();
+        if ($materialExists && $materialExists->id != $material->id) {
+            return $this->responseError([], 'Material already exists!');
         }
 
-        $patient->update($request->all());
-
-        return $this->responseSuccess($patient, 'Patient updated successfully!');
+        $material->update($request->all());
+        return $this->responseSuccess($material, 'Material updated successfully!');
     }
 
     public function destroy($id)
     {
-        $patient = Patient::where('id', $id)->where('user_id', Auth::id())->first();
+        $material = Material::where('id', $id)->where('user_id', Auth::id())->first();
 
-        if(!$patient){
-            return $this->responseError([], 'Patient not found!', 404);
+        if(!$material){
+            return $this->responseError([], 'Material not found!', 404);
         }
 
-        $patient->delete();
-        return $this->responseSuccess([], 'Patient deleted successfully!');
+        $material->delete();
+        return $this->responseSuccess([], 'Material deleted successfully!');
     }
 }

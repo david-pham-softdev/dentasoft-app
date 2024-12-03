@@ -51,6 +51,14 @@ Route::group([
     });
 
     Route::group(['prefix' => 'materials'], function () {
-        Route::get('', [MaterialController::class, 'index']);
+        Route::get('/by-user', [MaterialController::class, 'getByUser']);
+        Route::post('', [MaterialController::class, 'store']);
+        Route::put('/{id}', [MaterialController::class, 'update']);
+        Route::delete('/{id}', [MaterialController::class, 'destroy']);
     });
+});
+Route::group([
+    'namespace' => 'Api'
+], function () {
+    Route::get('materials/all', [MaterialController::class, 'index']);
 });
