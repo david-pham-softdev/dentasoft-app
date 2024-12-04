@@ -16,9 +16,6 @@ class PatientController extends Controller
     public function index()
     {
         $patients = Patient::where('user_id', Auth::id())->orderBy('created_at', 'desc')->paginate(15);
-        if (empty($patients)) {
-            return $this->responseError([], 'No patient found!');
-        }
         return $this->responseSuccess(['patients' => $patients]);
     }
 
