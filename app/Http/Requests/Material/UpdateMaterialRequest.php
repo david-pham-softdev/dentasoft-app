@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Patient;
+namespace App\Http\Requests\Material;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdatePatientRequest extends FormRequest
+class UpdateMaterialRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,13 +22,9 @@ class UpdatePatientRequest extends FormRequest
      * @return array
      */
     public function rules()
-    {
-		return [
-			'first_name' => 'required|string|min:1|max:255',
-			'last_name' => 'required|string|min:1|max:255',
-            'email' => 'string|email|max:255',
-            'age' => 'required|numeric',
-            'gender' => ['required', 'in:female,male']
-		];
-	}
+    { 
+		return [ 
+			'name' => 'required|string|min:1|max:255'
+		]; 
+	} 
 }

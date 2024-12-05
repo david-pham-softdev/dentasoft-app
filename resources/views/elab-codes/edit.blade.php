@@ -80,7 +80,7 @@
                                        <strong>{{ $errors->first('gender') }}</strong>
                                     </span>
                                  @endif
-                           </div>
+                              </div>
                            </div>
                            <button type="submit" class="btn btn-dark-red-f-gr mt-4 pull-right">
                               <i class="las la-save"></i> Save

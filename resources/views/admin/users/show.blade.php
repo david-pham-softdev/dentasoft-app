@@ -46,6 +46,10 @@
                            <label>Mobile number</label>
                            <input class="form-control" value="{{$user->phone_number}}" readonly />
                         </div>
+                        <div class="form-group col-sm-6">
+                           <label>Elab code</label>
+                           <input class="form-control" value="{{$user->code_elab}}" readonly />
+                        </div>
                         <div class="form-group col-sm-12">
                            <a class="btn btn-dark-blue-f mt-4" href="{{route('laboratory')}}">
                            <i class="la la-arrow-circle-o-left"></i>Back</a>
@@ -117,7 +121,7 @@
                 </div>
               </div>
               <div class="form-group col-sm-12">
-                  <a class="btn btn-dark-blue-f mt-4" href="{{route('laboratory')}}">
+                  <a class="btn btn-dark-blue-f mt-4" href="{{route('user')}}">
                   <i class="la la-arrow-circle-o-left"></i>Back</a>
                </div>
             </div>
