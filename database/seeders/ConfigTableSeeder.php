@@ -16,8 +16,8 @@ class ConfigTableSeeder extends Seeder
     public function run()
     {
         Config::create([
-            'app_name' => 'App Name', // String
-            'app_name_abv'  => 'AN', // String
+            'app_name' => 'Dentasoft App', // String
+            'app_name_abv'  => 'Dentasoft', // String
             'app_slogan'  => 'App Slogan', // String
             'captcha'  => 'F', // 'T' or 'F'
             'datasitekey'  => '', //String

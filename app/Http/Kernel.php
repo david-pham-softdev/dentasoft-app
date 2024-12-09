@@ -65,6 +65,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'ensure.email' => \App\Http\Middleware\EnsureEmailParameter::class,
+        'admin.email' => \App\Http\Middleware\AdminEmailParameter::class,
     ];
 
     protected $commands = [
