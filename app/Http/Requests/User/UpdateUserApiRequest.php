@@ -27,8 +27,7 @@ class UpdateUserApiRequest extends Request
             'last_name' => 'required|string|max:255|min:3',
             'phone_number' => ['required', 'numeric', 'digits:10'],
             'code_elab' => 'required|string|unique:users,code_elab,'.$this->id,
-            'role' => ['required', 'in:Dentist,Lab'],
-            'password' => 'required|string|min:6|confirmed',
+            'role' => ['required', 'in:Dentist,Lab']
 		];
 	}
 }

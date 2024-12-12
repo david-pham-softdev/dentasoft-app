@@ -1,33 +1,32 @@
-<?php
+<?php 
 
-namespace App\Http\Requests\User;
+namespace App\Http\Requests\Profile\Api; 
 
-use App\Http\Requests\Request;
+use App\Http\Requests\Request; 
 
-class StoreUserApiRequest extends Request
-{
-	public function authorize()
-	{
-		return true;
-	}
+class UpdateProfileRequest extends Request 
+{ 
+	public function authorize() 
+	{ 
+		return true; 
+	} 
 
 	public function messages()
 	{
 		return [
 			'email.unique'=>'E-mail already registered in the system.',
-            'role.in' => 'Role must be Dentist or Lab.',
 		];
 	}
 
 	public function rules()
 	{
 		return [
+            'email' => 'email|unique:users,email,'.$this->id,
             'company' => 'required|string|max:255|min:3',
-			'email' => 'required|string|email|max:255|unique:users',
             'first_name' => 'required|string|max:255|min:3',
             'last_name' => 'required|string|max:255|min:3',
             'phone_number' => ['required', 'numeric', 'digits:10'],
-            'code_elab' => 'required|string|unique:users',
+            'code_elab' => 'string|unique:users,code_elab,'.$this->id,
             'role' => ['required', 'in:Dentist,Lab']
 		];
 	}

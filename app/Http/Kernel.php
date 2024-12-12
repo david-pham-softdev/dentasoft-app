@@ -66,6 +66,8 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'ensure.email' => \App\Http\Middleware\EnsureEmailParameter::class,
         'admin.email' => \App\Http\Middleware\AdminEmailParameter::class,
+        'lab.email' => \App\Http\Middleware\LabEmailParameter::class,
+        'dentist.email' => \App\Http\Middleware\DentistEmailParameter::class,
     ];
 
     protected $commands = [
