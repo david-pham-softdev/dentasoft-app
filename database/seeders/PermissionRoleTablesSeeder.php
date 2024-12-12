@@ -44,11 +44,21 @@ class PermissionRoleTablesSeeder extends Seeder
         Role::create([
             'name' => 'Developer', 
             'label'  => 'System Developer'
-        ]);       
+        ]);    
 
         Role::create([
             'name' => 'Administrators', 
             'label'  => 'System Administrators'
+        ]);
+
+        Role::create([
+            'name' => 'Dentist', 
+            'label'  => 'System Lab'
+        ]);
+
+        Role::create([
+            'name' => 'Lab', 
+            'label'  => 'System Lab'
         ]); 
 
         $this->command->info('Roles created!');

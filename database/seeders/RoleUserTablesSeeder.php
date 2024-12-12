@@ -27,7 +27,7 @@ class RoleUserTablesSeeder extends Seeder
         User::create([
             'email' => 'dev@dev.com', 
             'name'  => 'Developer',
-            'password' => bcrypt('root'),
+            'password' => bcrypt('Secret@123'),
             'avatar'  => 'img/config/nopic.png',
             'active'  => true
         ]);
@@ -37,7 +37,7 @@ class RoleUserTablesSeeder extends Seeder
         User::create([
             'email' => 'admin@admin.com', 
             'name'  => 'Administrator',
-            'password' => bcrypt('admin'),
+            'password' => bcrypt('Secret@123'),
             'avatar'  => 'img/config/nopic.png',
             'active'  => true
         ]);

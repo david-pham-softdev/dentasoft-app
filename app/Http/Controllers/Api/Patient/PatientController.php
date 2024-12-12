@@ -6,9 +6,6 @@ use App\Http\Controllers\Api\Controller;
 use App\Http\Requests\Patient\StorePatientRequest;
 use App\Http\Requests\Patient\UpdatePatientRequest;
 use App\Models\Patient;
-use App\Models\User;
-use App\Models\Role;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class PatientController extends Controller
